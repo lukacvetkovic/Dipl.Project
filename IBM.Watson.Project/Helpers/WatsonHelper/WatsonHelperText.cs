@@ -21,7 +21,7 @@ namespace IBM.Watson.Project.Helpers.WatsonHelper
 
         public AlchemyResponse GetResult(string input)
         {
-            var urlEncode = HttpServerUtility.UrlTokenDecode(input);
+            var urlEncode = HttpUtility.UrlEncode(input);
             var EndPointUrl = APIUrlStart + urlEncode + APIUrlEnd + apiKey;
             var response = RequestHelper.Get(EndPointUrl);
 
