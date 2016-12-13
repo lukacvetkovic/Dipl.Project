@@ -12,7 +12,7 @@ namespace IBM.Watson.Project.Helpers.PDFParser
     {
         public string ExtractTextFromPdf(string path)
         {
-            return ExtractTextFromPdfBetter(path);
+            return ExtractTextFromPdfWorse(path);
         }
 
         public string ExtractTextFromPdfWorse(string path)

@@ -18,7 +18,7 @@ namespace IBM.Watson.Project
         {
             IPDFParser pdfParser = new ITextSharpPDFParser();
 
-            var text = pdfParser.ExtractTextFromPdf("test.pdf");
+            var text = pdfParser.ExtractTextFromPdf("ComSIS_526-1410.pdf");
 
             IWatsonHelper helper = new WatsonHelperText(APIKey);
 
@@ -28,6 +28,11 @@ namespace IBM.Watson.Project
             Console.WriteLine();
             Console.WriteLine("-- ------------------------------- --");
             Console.WriteLine();
+
+            foreach (var keyword in result.keywords.OrderBy(p=>p.text))
+            {
+                Console.WriteLine(keyword.text);
+            }
 
             //IWatsonHelper helpUrl = new WatsonHelperUrl(APIKey);
 

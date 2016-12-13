@@ -62,6 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ComSIS_526-1410.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="paper.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
