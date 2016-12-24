@@ -17,8 +17,8 @@ namespace IBM.Watson.Project
     class Program
     {
 
-        private static readonly string APIKey = "ea4cb11ced2395985e21914549b176c68111faac";
-        //private static readonly string APIKey = "aebf5e5def1d9ac9f0334cb1d8ef9d7ad477c314";
+        //private static readonly string APIKey = "ea4cb11ced2395985e21914549b176c68111faac";
+        private static readonly string APIKey = "aebf5e5def1d9ac9f0334cb1d8ef9d7ad477c314";
         static void Main(string[] args)
         {
             List<string> errors = new List<string>();
@@ -151,19 +151,19 @@ namespace IBM.Watson.Project
 
                 if (keywordsFromArticle != null && keywordsFromArticle.Any())
                 {
-                    foreach (var keyword in keywordsFromArticle.Distinct().ToList())
+                    foreach (var keyword in keywordsFromArticle.Select(p => p.Trim()).Distinct().ToList())
                     {
                         db.ArticleKeyword.Add(new ArticleKeyword()
                         {
                             Id = -1,
                             ArticleId = article.Id,
-                            Keyword = keyword.ToLower()
+                            Keyword = keyword.ToLower().Trim()
                         });
                     }
                 }
 
                 db.SaveChanges();
-                if (watsonKeywords != null && watsonKeywords.Any())
+                if (watsonKeywords != null && watsonKeywords.Select(p => p.Trim()).Any())
                 {
                     foreach (var watkeyword in watsonKeywords.Distinct().ToList())
                     {
@@ -171,7 +171,7 @@ namespace IBM.Watson.Project
                         {
                             Id = -1,
                             ArticleId = article.Id,
-                            Keyword = watkeyword.ToLower()
+                            Keyword = watkeyword.ToLower().Trim()
                         });
                     }
                 }
@@ -179,9 +179,9 @@ namespace IBM.Watson.Project
                 db.SaveChanges();
                 if (concepts != null && concepts.Any())
                 {
-                    foreach (var concept in concepts.Distinct().ToList())
+                    foreach (var concept in concepts.Select(p=>p.Trim()).Distinct().ToList())
                     {
-                        db.Concept.Add(new Concept() { Id = -1, ArticleId = article.Id, ConceptName = concept.ToLower() });
+                        db.Concept.Add(new Concept() { Id = -1, ArticleId = article.Id, ConceptName = concept.ToLower().Trim() });
                     }
                 }
 
