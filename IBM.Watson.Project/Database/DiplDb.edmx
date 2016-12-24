@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Dipl.ProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArticleName" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArticleKeyword">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Keyword" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ArticleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Concept">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConceptName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ArticleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WatsonKeyword">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Keyword" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ArticleId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ArticleKeyword_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="ArticleKeyword" Type="Self.ArticleKeyword" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArticleKeyword">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Concept_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="Concept" Type="Self.Concept" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Concept">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WatsonKeyword_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="WatsonKeyword" Type="Self.WatsonKeyword" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WatsonKeyword">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DiplProjectModelStoreContainer">
+          <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticleKeyword" EntityType="Self.ArticleKeyword" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Concept" EntityType="Self.Concept" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WatsonKeyword" EntityType="Self.WatsonKeyword" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ArticleKeyword_Article" Association="Self.FK_ArticleKeyword_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="ArticleKeyword" EntitySet="ArticleKeyword" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Concept_Article" Association="Self.FK_Concept_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="Concept" EntitySet="Concept" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WatsonKeyword_Article" Association="Self.FK_WatsonKeyword_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="WatsonKeyword" EntitySet="WatsonKeyword" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Dipl.ProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DiplProjectDb" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Article" EntityType="Dipl.ProjectModel.Article" />
+          <EntitySet Name="ArticleKeyword" EntityType="Dipl.ProjectModel.ArticleKeyword" />
+          <EntitySet Name="Concept" EntityType="Dipl.ProjectModel.Concept" />
+          <EntitySet Name="WatsonKeyword" EntityType="Dipl.ProjectModel.WatsonKeyword" />
+          <AssociationSet Name="FK_ArticleKeyword_Article" Association="Dipl.ProjectModel.FK_ArticleKeyword_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="ArticleKeyword" EntitySet="ArticleKeyword" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Concept_Article" Association="Dipl.ProjectModel.FK_Concept_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="Concept" EntitySet="Concept" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WatsonKeyword_Article" Association="Dipl.ProjectModel.FK_WatsonKeyword_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="WatsonKeyword" EntitySet="WatsonKeyword" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArticleName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ArticleKeyword" Relationship="Dipl.ProjectModel.FK_ArticleKeyword_Article" FromRole="Article" ToRole="ArticleKeyword" />
+          <NavigationProperty Name="Concept" Relationship="Dipl.ProjectModel.FK_Concept_Article" FromRole="Article" ToRole="Concept" />
+          <NavigationProperty Name="WatsonKeyword" Relationship="Dipl.ProjectModel.FK_WatsonKeyword_Article" FromRole="Article" ToRole="WatsonKeyword" />
+        </EntityType>
+        <EntityType Name="ArticleKeyword">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Keyword" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ArticleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="Dipl.ProjectModel.FK_ArticleKeyword_Article" FromRole="ArticleKeyword" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="Concept">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConceptName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ArticleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="Dipl.ProjectModel.FK_Concept_Article" FromRole="Concept" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="WatsonKeyword">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Keyword" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ArticleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="Dipl.ProjectModel.FK_WatsonKeyword_Article" FromRole="WatsonKeyword" ToRole="Article" />
+        </EntityType>
+        <Association Name="FK_ArticleKeyword_Article">
+          <End Type="Dipl.ProjectModel.Article" Role="Article" Multiplicity="1" />
+          <End Type="Dipl.ProjectModel.ArticleKeyword" Role="ArticleKeyword" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArticleKeyword">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Concept_Article">
+          <End Type="Dipl.ProjectModel.Article" Role="Article" Multiplicity="1" />
+          <End Type="Dipl.ProjectModel.Concept" Role="Concept" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Concept">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WatsonKeyword_Article">
+          <End Type="Dipl.ProjectModel.Article" Role="Article" Multiplicity="1" />
+          <End Type="Dipl.ProjectModel.WatsonKeyword" Role="WatsonKeyword" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WatsonKeyword">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DiplProjectModelStoreContainer" CdmEntityContainer="DiplProjectDb">
+          <EntitySetMapping Name="Article">
+            <EntityTypeMapping TypeName="Dipl.ProjectModel.Article">
+              <MappingFragment StoreEntitySet="Article">
+                <ScalarProperty Name="ArticleName" ColumnName="ArticleName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticleKeyword">
+            <EntityTypeMapping TypeName="Dipl.ProjectModel.ArticleKeyword">
+              <MappingFragment StoreEntitySet="ArticleKeyword">
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+                <ScalarProperty Name="Keyword" ColumnName="Keyword" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Concept">
+            <EntityTypeMapping TypeName="Dipl.ProjectModel.Concept">
+              <MappingFragment StoreEntitySet="Concept">
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+                <ScalarProperty Name="ConceptName" ColumnName="ConceptName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WatsonKeyword">
+            <EntityTypeMapping TypeName="Dipl.ProjectModel.WatsonKeyword">
+              <MappingFragment StoreEntitySet="WatsonKeyword">
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+                <ScalarProperty Name="Keyword" ColumnName="Keyword" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

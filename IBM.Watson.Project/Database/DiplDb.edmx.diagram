@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fb5fe1b64ce6473f9d3a83da9b2abd69" Name="Diagram1">
+        <EntityTypeShape EntityType="Dipl.ProjectModel.Article" Width="1.5" PointX="0.75" PointY="3.625" />
+        <EntityTypeShape EntityType="Dipl.ProjectModel.ArticleKeyword" Width="1.5" PointX="3" PointY="6.25" />
+        <EntityTypeShape EntityType="Dipl.ProjectModel.Concept" Width="1.5" PointX="3" PointY="1.125" />
+        <EntityTypeShape EntityType="Dipl.ProjectModel.WatsonKeyword" Width="1.5" PointX="3" PointY="3.75" />
+        <AssociationConnector Association="Dipl.ProjectModel.FK_ArticleKeyword_Article" />
+        <AssociationConnector Association="Dipl.ProjectModel.FK_Concept_Article" />
+        <AssociationConnector Association="Dipl.ProjectModel.FK_WatsonKeyword_Article" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
