@@ -209,7 +209,7 @@ namespace IBM.Watson.Project
 
             var keyWordUnion =
                 watsonKeywords.Select(p => p.Keyword).ToList().Union(articleKeywords.Select(x => x.Keyword).ToList());
-            keyWordUnion = keyWordUnion.Distinct().OrderBy(p => p.ToString()).ToList();
+            keyWordUnion = keyWordUnion.Distinct().OrderBy(p => p.ToString().Trim()).ToList();
 
             List<string> firstRow = new List<string>() { "Id", "Name" };
 
@@ -226,7 +226,7 @@ namespace IBM.Watson.Project
 
                 var articleUnionKeyWord =
                     article.ArticleKeyword.Select(p => p.Keyword)
-                    .Union(article.WatsonKeyword.Select(p => p.Keyword))
+                    .Union(article.WatsonKeyword.Select(p => p.Keyword.Trim()))
                     .Distinct()
                     .ToList();
 
