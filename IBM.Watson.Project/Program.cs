@@ -25,6 +25,7 @@ namespace IBM.Watson.Project
             ExportKeywordUnion();
             ExportConcepts();
             ExportKeywords();
+            ExportStatistics();
             return;
             List<string> errors = new List<string>();
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Articles";
@@ -138,6 +139,45 @@ namespace IBM.Watson.Project
             }
 
             Console.ReadLine();
+        }
+
+        private static void ExportStatistics()
+        {
+            DiplProjectDb db = new DiplProjectDb();
+
+            var articles = db.Article.ToList();
+
+            string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            List<List<string>> statisticsList = new List<List<string>>();
+
+            List<string> firstRow= new List<string>() {"Id","Name","Article keyword count","Watson count", "Watson matched (%)"};
+
+            statisticsList.Add(firstRow);
+
+            foreach (var article in articles.OrderBy(p => p.Id))
+            {
+                List<string> row = new List<string>() { article.Id.ToString(),article.ArticleName,article.ArticleKeyword.Count.ToString(),article.WatsonKeyword.Count.ToString()};
+                int articleKeywordCount = article.ArticleKeyword.Count;
+
+                int matched = 0;
+
+                var watsonKeywords = article.WatsonKeyword.Select(p => p.Keyword);
+
+                foreach (var articleKeyword in article.ArticleKeyword.Select(p=>p.Keyword))
+                {
+                    if (watsonKeywords.Contains(articleKeyword))
+                    {
+                        matched++;
+                    }
+                }
+                row.Add(((double)matched/articleKeywordCount).ToString());
+
+                statisticsList.Add(row);
+
+            }
+
+            CSVHelper.ExporToCSV(pathDesktop, "statistics.csv", statisticsList);
         }
 
         private static void ExportKeywords()
