@@ -86,6 +86,7 @@
     <Compile Include="Database\WatsonKeyword.cs">
       <DependentUpon>DiplDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CSVHelper.cs" />
     <Compile Include="Helpers\JSONHelper.cs" />
     <Compile Include="Helpers\PDFParser\IPDFParser.cs" />
     <Compile Include="Helpers\PDFParser\ITextSharpPDFParser.cs" />

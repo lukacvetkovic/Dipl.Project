@@ -21,6 +21,11 @@ namespace IBM.Watson.Project
         private static readonly string APIKey = "aebf5e5def1d9ac9f0334cb1d8ef9d7ad477c314";
         static void Main(string[] args)
         {
+            ExportWatsonKeywords();
+            ExportKeywordUnion();
+            ExportConcepts();
+            ExportKeywords();
+            return;
             List<string> errors = new List<string>();
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Articles";
 
@@ -135,6 +140,138 @@ namespace IBM.Watson.Project
             Console.ReadLine();
         }
 
+        private static void ExportKeywords()
+        {
+            DiplProjectDb db = new DiplProjectDb();
+
+            var articles = db.Article.ToList();
+
+            string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            List<List<string>> keyWordList = new List<List<string>>();
+
+            foreach (var article in articles.OrderBy(p => p.Id))
+            {
+                List<string> row = new List<string>();
+                row.Add(article.Id.ToString());
+                row.Add(article.ArticleName);
+
+                foreach (var watsonKeyword in article.ArticleKeyword)
+                {
+                    row.Add(watsonKeyword.Keyword);
+                }
+
+                keyWordList.Add(row);
+            }
+
+            CSVHelper.ExporToCSV(pathDesktop, "keywords.csv", keyWordList);
+        }
+
+        private static void ExportConcepts()
+        {
+            DiplProjectDb db = new DiplProjectDb();
+
+            var articles = db.Article.ToList();
+
+            string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            List<List<string>> conceptList = new List<List<string>>();
+
+            foreach (var article in articles.OrderBy(p => p.Id))
+            {
+                List<string> row = new List<string>();
+                row.Add(article.Id.ToString());
+                row.Add(article.ArticleName);
+
+                foreach (var concept in article.Concept)
+                {
+                    row.Add(concept.ConceptName);
+                }
+
+                conceptList.Add(row);
+            }
+
+            CSVHelper.ExporToCSV(pathDesktop, "concept.csv", conceptList);
+        }
+
+        private static void ExportKeywordUnion()
+        {
+            DiplProjectDb db = new DiplProjectDb();
+
+            var articles = db.Article.ToList();
+
+            string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            List<List<string>> exportList = new List<List<string>>();
+
+            var watsonKeywords = db.WatsonKeyword.ToList();
+            var articleKeywords = db.ArticleKeyword.ToList();
+
+            var keyWordUnion =
+                watsonKeywords.Select(p => p.Keyword).ToList().Union(articleKeywords.Select(x => x.Keyword).ToList());
+            keyWordUnion = keyWordUnion.Distinct().OrderBy(p => p.ToString()).ToList();
+
+            List<string> firstRow = new List<string>() { "Id", "Name" };
+
+            foreach (var keyWord in keyWordUnion)
+            {
+                firstRow.Add(keyWord);
+            }
+
+            exportList.Add(firstRow);
+
+            foreach (var article in articles.OrderBy(p => p.Id))
+            {
+                List<string> row = new List<string> { article.Id.ToString(), article.ArticleName };
+
+                var articleUnionKeyWord =
+                    article.ArticleKeyword.Select(p => p.Keyword)
+                    .Union(article.WatsonKeyword.Select(p => p.Keyword))
+                    .Distinct()
+                    .ToList();
+
+                foreach (var keyWord in keyWordUnion)
+                {
+                    row.Add(articleUnionKeyWord.Contains(keyWord) ? "1" : "0");
+                }
+
+                exportList.Add(row);
+            }
+
+
+
+            CSVHelper.ExporToCSV(pathDesktop, "keywordUnion.csv", exportList);
+
+        }
+
+        private static void ExportWatsonKeywords()
+        {
+            DiplProjectDb db = new DiplProjectDb();
+
+            var articles = db.Article.ToList();
+
+            string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            List<List<string>> foundKeyWordList = new List<List<string>>();
+
+            foreach (var article in articles.OrderBy(p => p.Id))
+            {
+                List<string> row = new List<string>();
+                row.Add(article.Id.ToString());
+                row.Add(article.ArticleName);
+
+                foreach (var watsonKeyword in article.WatsonKeyword)
+                {
+                    row.Add(watsonKeyword.Keyword);
+                }
+
+                foundKeyWordList.Add(row);
+            }
+
+            CSVHelper.ExporToCSV(pathDesktop, "watsonkeywords.csv", foundKeyWordList);
+
+        }
+
         private static void SaveToDb(string name, List<string> keywordsFromArticle, List<string> watsonKeywords, List<string> concepts)
         {
             try
@@ -179,7 +316,7 @@ namespace IBM.Watson.Project
                 db.SaveChanges();
                 if (concepts != null && concepts.Any())
                 {
-                    foreach (var concept in concepts.Select(p=>p.Trim()).Distinct().ToList())
+                    foreach (var concept in concepts.Select(p => p.Trim()).Distinct().ToList())
                     {
                         db.Concept.Add(new Concept() { Id = -1, ArticleId = article.Id, ConceptName = concept.ToLower().Trim() });
                     }
