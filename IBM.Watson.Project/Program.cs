@@ -171,7 +171,9 @@ namespace IBM.Watson.Project
                         matched++;
                     }
                 }
-                row.Add(((double)matched/articleKeywordCount).ToString());
+                string percentage = ((double) matched/articleKeywordCount).ToString();
+                percentage = percentage.Replace(',', '.');
+                row.Add(percentage);
 
                 statisticsList.Add(row);
 
