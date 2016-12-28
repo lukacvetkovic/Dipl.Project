@@ -21,6 +21,43 @@ namespace IBM.Watson.Project
         private static readonly string APIKey = "aebf5e5def1d9ac9f0334cb1d8ef9d7ad477c314";
         static void Main(string[] args)
         {
+
+            //string line;
+            //DiplProjectDb context = new DiplProjectDb();
+            //// Read the file and display it line by line.
+            //System.IO.StreamReader file = new System.IO.StreamReader("filestoinput.txt");
+            //while ((line = file.ReadLine()) != null)
+            //{
+            //    Console.WriteLine(line);
+            //    string[] split = line.Split(';');
+            //    string name = split[0];
+            //    string[] keywords = split[1].Split(',');
+
+            //    var article = context.Article.SingleOrDefault(p => p.ArticleName == name);
+            //    if (article != null)
+            //    {
+
+            //        if (keywords != null && keywords.Any())
+            //        {
+            //            foreach (var keyword in keywords.Select(p => p.Trim()).Distinct().ToList())
+            //            {
+            //                context.ArticleKeyword.Add(new ArticleKeyword()
+            //                {
+            //                    Id = -1,
+            //                    ArticleId = article.Id,
+            //                    Keyword = keyword.ToLower().Trim()
+            //                });
+            //                context.SaveChanges();
+            //            }
+            //        }
+            //    }
+
+
+            //}
+
+            //file.Close();
+
+            // Suspend the screen.
             ExportWatsonKeywords();
             ExportKeywordUnion();
             ExportConcepts();
